@@ -1,31 +1,37 @@
 //your code here
-const parent = document.querySelector("#parent");
-let selectedDiv = null;
-let start = null;
+const images = document.querySelectorAll(".image");
+const flex = document.querySelector(".flex");
 
-parent.addEventListener("dragstart", (e) => {
-  selectedDiv = e.target;
-parent.addEventListener("dragstart", (event) => {
-  start = event.target;
-});
+flex.addEventListener('dragstart',dragStart);
+flex.addEventListener('dragend',dragEnd);
 
-parent.addEventListener("dragover", (e) => {
-  e.preventDefault();
-parent.addEventListener("dragover", (event) => {
-  event.preventDefault();
-});
+for(const image of images){
+    image.addEventListener('dragover', dragOver);
+    image.addEventListener('dragenter', dragEnter);
+    image.addEventListener('dragleave', dragLeave);
+    image.addEventListener('drop', dragDrop);
+}
 
-parent.addEventListener("drop", (e) => {
-  e.preventDefault();
-  const targetDiv = e.target;
-  const parent = targetDiv.parentNode;
-  if (targetDiv !== selectedDiv) {
-    parent.insertBefore(selectedDiv, targetDiv);
-parent.addEventListener("drop", (event) => {
-  event.preventDefault();
-  const final = event.target;
-  const parent = final.parentNode;
-  if (final !== start) {
-    parent.insertBefore(start, final);
-  }
-});
+function dragDrop(){
+    this.className = 'image';
+    this.append(image);
+}
+function dragLeave(){
+   this.className = 'image';
+}
+function dragEnter(e){
+    e.preventDefault();
+    this.className += 'selected'
+
+}
+function dragOver(e){
+    e.preventDefault();
+}
+function dragEnd(){
+    this.className = 'image'
+}
+function dragStart(){
+    this.className += 'selected';
+    setTimeout(()=> this.className = 'invisible', 0);
+}
+
